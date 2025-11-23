@@ -23,7 +23,42 @@
 
 @media (max-width: 768px) {
     .columns-container {
-        grid-template-columns: 1fr;
+        /* Keep 2 columns, but reduce gap */
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .team-column-box {
+        /* Reduce padding to save space */
+        padding: 0.5rem;
+    }
+
+    .player-card-row {
+        /* Stack content inside the card to save horizontal space */
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+        padding: 0.5rem;
+        text-align: center;
+    }
+
+    .player-actions {
+        /* Center buttons */
+        justify-content: center;
+        width: 100%;
+    }
+
+    .player-name-text {
+        font-size: 0.85rem;
+        word-break: break-word;
+        /* Prevent long names from overflowing */
+    }
+
+    /* Keep drag handle visible but compact */
+    .drag-handle {
+        display: flex;
+        padding: 0.25rem;
+        align-self: center;
     }
 }
 
