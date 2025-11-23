@@ -1,0 +1,302 @@
+/* Team Builder Styles */
+
+.team-builder-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.columns-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .columns-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+.team-column-box {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.team-header-block {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.team-header-top {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.team-header-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.team-name-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.team-name-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid transparent;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    width: 100%;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.team-name-input:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.team-name-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    outline: none;
+    border-color: var(--accent-primary);
+}
+
+.edit-hint {
+    position: absolute;
+    right: 8px;
+    color: rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+    font-size: 0.8rem;
+}
+
+.team-count-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: white;
+}
+
+.player-reorder-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-right: 0.5rem;
+}
+
+.reorder-btn {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    font-size: 0.6rem;
+    padding: 2px 4px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+}
+
+.reorder-btn:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.drag-handle {
+    color: #94a3b8;
+    cursor: grab;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drag-handle:active {
+    cursor: grabbing;
+    color: white;
+}
+
+.unassigned-row {
+    border-left: 4px solid #64748b;
+}
+
+.team-list-container {
+    flex: 1;
+    border-radius: 8px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    min-height: 200px;
+}
+
+.player-card-row {
+    background: #334155;
+    padding: 0.75rem;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.player-name-text {
+    font-weight: 600;
+    color: white;
+    font-size: 0.95rem;
+    flex: 1;
+}
+
+.player-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.action-icon-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #e2e8f0;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.action-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.delete-icon-btn {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.delete-icon-btn:hover {
+    color: #ef4444;
+}
+
+.unassigned-pool {
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+}
+
+.pool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.vs-badge {
+    font-weight: 900;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    background: #334155;
+    padding: 0.5rem;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shuffle-btn {
+    background: #f59e0b;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.shuffle-btn:hover {
+    background: #d97706;
+}
+
+.icon-selector {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.icon-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.icon-btn.selected {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+.color-picker {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.empty-msg {
+    text-align: center;
+    color: var(--text-secondary);
+    font-style: italic;
+    padding: 2rem;
+}
