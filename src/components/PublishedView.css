@@ -107,8 +107,32 @@
 
 @media (max-width: 640px) {
     .teams-container {
-        flex-direction: column;
-        gap: 2rem;
+        /* Keep 2 columns on mobile */
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    .team-column {
+        padding: 0.5rem;
+    }
+
+    .team-title h3 {
+        font-size: 1rem;
+    }
+
+    .team-list li {
+        font-size: 0.85rem;
+        padding: 0.25rem;
+    }
+
+    .player-number {
+        margin-right: 0.25rem;
+        width: 18px;
+    }
+
+    .vs-divider {
+        font-size: 1rem;
+        padding: 0 0.25rem;
     }
 }
 
