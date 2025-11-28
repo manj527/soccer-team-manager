@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PlayerInput } from './components/PlayerInput';
 import { TeamBuilder } from './components/TeamBuilder';
 import { ShareSection } from './components/ShareSection';
+import { MVPSelector } from './components/MVPSelector';
 import { Trophy } from 'lucide-react';
 
 const DEFAULT_PLAYERS = [
@@ -106,6 +107,8 @@ function App() {
           iconB={iconB}
         />
       </div>
+
+      <MVPSelector />
 
       <footer style={{ textAlign: 'center', marginTop: '4rem', color: '#475569', fontSize: '0.8rem', paddingBottom: '2rem' }}>
         <p>Built for the game.</p>
