@@ -25,6 +25,7 @@ export const MatchHighlights = React.memo(() => {
         }
     ]);
     const [dunkinStories, setDunkinStories] = useState('');
+    const [dunkinPhoto, setDunkinPhoto] = useState(null);
     const [showPreview, setShowPreview] = useState(false);
     const [isExporting, setIsExporting] = useState(false);
     const magazineRef = useRef(null);
@@ -51,6 +52,17 @@ export const MatchHighlights = React.memo(() => {
             const reader = new FileReader();
             reader.onloadend = () => {
                 updateHighlight(id, 'photo', reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleDunkinPhotoUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setDunkinPhoto(reader.result);
             };
             reader.readAsDataURL(file);
         }
@@ -198,6 +210,25 @@ export const MatchHighlights = React.memo(() => {
                         rows={3}
                         style={{ marginTop: '0.5rem' }}
                     />
+                    <div style={{ marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                        <label className="btn-secondary" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', borderColor: '#ff6719', color: '#ff6719' }}>
+                            <Camera size={18} /> {dunkinPhoto ? 'Change Snack Photo' : 'Add Snack Photo'}
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleDunkinPhotoUpload}
+                                style={{ display: 'none' }}
+                            />
+                        </label>
+                        {dunkinPhoto && (
+                            <div className="photo-preview-wrapper" style={{ maxWidth: '80px', margin: 0 }}>
+                                <img src={dunkinPhoto} alt="Snack Preview" className="photo-preview" />
+                                <button className="remove-photo-btn" onClick={() => setDunkinPhoto(null)}>
+                                    <X size={12} />
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
 
                 <button className="btn-primary" onClick={() => setShowPreview(true)} style={{ marginTop: '1rem', backgroundColor: '#1a1a1a' }}>
@@ -229,8 +260,8 @@ export const MatchHighlights = React.memo(() => {
                                                 <img src={h.photo} alt="Story" />
                                                 {h.badge && (
                                                     <div className={`highlight-badge ${h.badge === 'STAR PLAYER' ? 'badge-gold' :
-                                                            h.badge === 'GOAL OF THE DAY' ? 'badge-blue' :
-                                                                h.badge === 'MIRACLE SAVE' ? 'badge-purple' : ''
+                                                        h.badge === 'GOAL OF THE DAY' ? 'badge-blue' :
+                                                            h.badge === 'MIRACLE SAVE' ? 'badge-purple' : ''
                                                         }`}>
                                                         {h.badge}
                                                     </div>
@@ -249,6 +280,11 @@ export const MatchHighlights = React.memo(() => {
                                             <span>🍩</span>
                                         </div>
                                         <div className="dunkin-content">
+                                            {dunkinPhoto && (
+                                                <div className="dunkin-photo-frame">
+                                                    <img src={dunkinPhoto} alt="Dunkin Moment" />
+                                                </div>
+                                            )}
                                             {dunkinStories.split('\n').map((line, i) => (
                                                 <p key={i}>{line}</p>
                                             ))}
