@@ -3,7 +3,10 @@ import { PlayerInput } from './components/PlayerInput';
 import { TeamBuilder } from './components/TeamBuilder';
 import { ShareSection } from './components/ShareSection';
 import { MVPSelector } from './components/MVPSelector';
-import { Trophy } from 'lucide-react';
+import { MoneyCalculation } from './components/MoneyCalculation';
+import { PaymentTracking } from './components/PaymentTracking';
+import { RosterManagement } from './components/RosterManagement';
+import { Trophy, Users, DollarSign, Calendar, List, Download, Upload, UserPlus } from 'lucide-react';
 
 const DEFAULT_PLAYERS = [
 
@@ -32,7 +35,8 @@ const DEFAULT_PLAYERS = [
 ];
 
 function App() {
-  // Split default players 50/50 initially
+  const [activeTab, setActiveTab] = useState('teams');
+
   const half = Math.ceil(DEFAULT_PLAYERS.length / 2);
   const [players, setPlayers] = useState([]); // Unassigned pool
   const [teamA, setTeamA] = useState(DEFAULT_PLAYERS.slice(0, half));
@@ -44,6 +48,122 @@ function App() {
   const [nameB, setNameB] = useState('Team B');
   const [iconA, setIconA] = useState('shield');
   const [iconB, setIconB] = useState('swords');
+
+  // Session loader state
+  const [rosters, setRosters] = useState({ saturday: [], wednesday: [], guests: [] });
+  const [sessionForTeams, setSessionForTeams] = useState('saturday');
+
+  const fetchRosters = async () => {
+    try {
+      const res = await fetch('/api/rosters');
+      const data = await res.json();
+      const allPlayers = data.players || [];
+      const newRosters = {
+        saturday: allPlayers.filter(p => p.types && p.types.includes('saturday')),
+        wednesday: allPlayers.filter(p => p.types && p.types.includes('wednesday')),
+        guests: allPlayers.filter(p => p.types && p.types.includes('guest'))
+      };
+      setRosters(newRosters);
+      return newRosters;
+    } catch (err) {
+      console.error(err);
+      return rosters; // fallback to current state
+    }
+  };
+
+  React.useEffect(() => {
+    fetchRosters();
+  }, [activeTab]); // Refetch when changing tabs to ensure fresh data
+
+  const handleGenerateTeams = async () => {
+    const latestRosters = await fetchRosters();
+
+    let rosterToLoad = [];
+    if (sessionForTeams === 'saturday') rosterToLoad = latestRosters.saturday;
+    if (sessionForTeams === 'wednesday') rosterToLoad = latestRosters.wednesday;
+    if (sessionForTeams === 'holiday') {
+      const all = [...latestRosters.saturday, ...latestRosters.wednesday, ...latestRosters.guests];
+      const unique = [];
+      const map = new Map();
+      for (const item of all) {
+        if (!map.has(item.id)) { map.set(item.id, true); unique.push(item); }
+      }
+      rosterToLoad = unique;
+    }
+
+    if (rosterToLoad.length === 0) {
+      alert("No players found in this session roster to generate teams.");
+      return;
+    }
+
+    const newTeamA = [];
+    const newTeamB = [];
+    const handledIds = new Set();
+    const availablePlayers = [...rosterToLoad];
+
+    // 1. Process explicit pairs first
+    for (const player of availablePlayers) {
+      if (handledIds.has(player.id)) continue;
+
+      if (player.pairedWith) {
+        const partner = availablePlayers.find(p => p.id === player.pairedWith);
+        if (partner && !handledIds.has(partner.id)) {
+          // Ensure balanced distribution when dropping pairs
+          if (newTeamA.length <= newTeamB.length) {
+            newTeamA.push(player);
+            newTeamB.push(partner);
+          } else {
+            newTeamB.push(player);
+            newTeamA.push(partner);
+          }
+          handledIds.add(player.id);
+          handledIds.add(partner.id);
+        }
+      }
+    }
+
+    // 2. Process all remaining players
+    const remainingPlayers = availablePlayers.filter(p => !handledIds.has(p.id));
+
+    // Optional: Shuffle remaining players for randomness (comment out if you want strict sequential)
+    for (let i = remainingPlayers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [remainingPlayers[i], remainingPlayers[j]] = [remainingPlayers[j], remainingPlayers[i]];
+    }
+
+    for (const player of remainingPlayers) {
+      if (newTeamA.length <= newTeamB.length) {
+        newTeamA.push(player);
+      } else {
+        newTeamB.push(player);
+      }
+    }
+
+    // Clear unassigned pool and replace teams
+    setPlayers([]);
+    setTeamA(newTeamA);
+    setTeamB(newTeamB);
+  };
+
+  const handleLoadGuests = async () => {
+    const latestRosters = await fetchRosters();
+    const guests = latestRosters.guests || [];
+    if (guests.length === 0) {
+      alert("No guests found in roster.");
+      return;
+    }
+
+    // Filter out duplicates that might already be drawn
+    const existingIds = new Set([...players, ...teamA, ...teamB].map(p => p.id));
+    const newGuests = guests.filter(g => !existingIds.has(g.id));
+
+    if (newGuests.length === 0) {
+      alert("All guests from the roster are already on the screen.");
+      return;
+    }
+
+    setPlayers(prev => [...prev, ...newGuests]);
+  };
 
   const handleAddPlayers = (names, target) => {
     const newPlayers = names.map((name) => ({
@@ -72,43 +192,144 @@ function App() {
         </p>
       </header>
 
-      <PlayerInput onAddPlayers={handleAddPlayers} />
-
-      <TeamBuilder
-        players={players}
-        teamA={teamA}
-        teamB={teamB}
-        setPlayers={setPlayers}
-        setTeamA={setTeamA}
-        setTeamB={setTeamB}
-        colorA={colorA}
-        setColorA={setColorA}
-        colorB={colorB}
-        setColorB={setColorB}
-        nameA={nameA}
-        setNameA={setNameA}
-        nameB={nameB}
-        setNameB={setNameB}
-        iconA={iconA}
-        setIconA={setIconA}
-        iconB={iconB}
-        setIconB={setIconB}
-      />
-
-      <div style={{ marginTop: '2rem' }}>
-        <ShareSection
-          teamA={teamA}
-          teamB={teamB}
-          colorA={colorA}
-          colorB={colorB}
-          nameA={nameA}
-          nameB={nameB}
-          iconA={iconA}
-          iconB={iconB}
-        />
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '2rem' }}>
+        <button
+          onClick={() => setActiveTab('teams')}
+          style={{
+            padding: '0.75rem 1.5rem',
+            borderRadius: '8px',
+            backgroundColor: activeTab === 'teams' ? 'var(--accent-primary)' : 'var(--card-bg)',
+            color: activeTab === 'teams' ? 'white' : 'var(--text-secondary)',
+            border: `1px solid ${activeTab === 'teams' ? 'var(--accent-primary)' : '#334155'}`,
+            display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500'
+          }}
+        >
+          <Users size={18} /> Teams
+        </button>
+        <button
+          onClick={() => setActiveTab('calculation')}
+          style={{
+            padding: '0.75rem 1.5rem',
+            borderRadius: '8px',
+            backgroundColor: activeTab === 'calculation' ? 'var(--accent-primary)' : 'var(--card-bg)',
+            color: activeTab === 'calculation' ? 'white' : 'var(--text-secondary)',
+            border: `1px solid ${activeTab === 'calculation' ? 'var(--accent-primary)' : '#334155'}`,
+            display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500'
+          }}
+        >
+          <DollarSign size={18} /> Calculation
+        </button>
+        <button
+          onClick={() => setActiveTab('payments')}
+          style={{
+            padding: '0.75rem 1.5rem',
+            borderRadius: '8px',
+            backgroundColor: activeTab === 'payments' ? 'var(--accent-primary)' : 'var(--card-bg)',
+            color: activeTab === 'payments' ? 'white' : 'var(--text-secondary)',
+            border: `1px solid ${activeTab === 'payments' ? 'var(--accent-primary)' : '#334155'}`,
+            display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500'
+          }}
+        >
+          <Calendar size={18} /> Payments
+        </button>
+        <button
+          onClick={() => setActiveTab('rosters')}
+          style={{
+            padding: '0.75rem 1.5rem',
+            borderRadius: '8px',
+            backgroundColor: activeTab === 'rosters' ? 'var(--accent-primary)' : 'var(--card-bg)',
+            color: activeTab === 'rosters' ? 'white' : 'var(--text-secondary)',
+            border: `1px solid ${activeTab === 'rosters' ? 'var(--accent-primary)' : '#334155'}`,
+            display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500'
+          }}
+        >
+          <List size={18} /> Rosters
+        </button>
       </div>
 
-      <MVPSelector />
+      {activeTab === 'teams' && (
+        <>
+          <div className="card" style={{ marginBottom: '2rem', display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <div style={{ flexGrow: 1 }}>
+              <select
+                value={sessionForTeams}
+                onChange={(e) => setSessionForTeams(e.target.value)}
+                style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #334155', backgroundColor: 'var(--bg-color)', color: 'var(--text-primary)' }}
+              >
+                <option value="saturday">Saturday Indoor</option>
+                <option value="wednesday">Wednesday Indoor</option>
+                <option value="holiday">Holiday Special</option>
+              </select>
+            </div>
+            <button onClick={handleGenerateTeams} className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1.5rem', whiteSpace: 'nowrap' }}>
+              <Users size={18} /> Generate Teams
+            </button>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+            <div style={{ flexGrow: 1 }}>
+              <PlayerInput onAddPlayers={handleAddPlayers} />
+            </div>
+            <button
+              onClick={handleLoadGuests}
+              className="btn-secondary"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.75rem 1rem', whiteSpace: 'nowrap', marginLeft: '1rem', marginTop: '1.75rem' }}
+              title="Load saved guests from Roster manager"
+            >
+              <UserPlus size={18} /> Load Roster Guests
+            </button>
+          </div>
+
+          <TeamBuilder
+            players={players}
+            teamA={teamA}
+            teamB={teamB}
+            setPlayers={setPlayers}
+            setTeamA={setTeamA}
+            setTeamB={setTeamB}
+            colorA={colorA}
+            setColorA={setColorA}
+            colorB={colorB}
+            setColorB={setColorB}
+            nameA={nameA}
+            setNameA={setNameA}
+            nameB={nameB}
+            setNameB={setNameB}
+            iconA={iconA}
+            setIconA={setIconA}
+            iconB={iconB}
+            setIconB={setIconB}
+          />
+
+          <div style={{ marginTop: '2rem' }}>
+            <ShareSection
+              teamA={teamA}
+              teamB={teamB}
+              colorA={colorA}
+              colorB={colorB}
+              nameA={nameA}
+              nameB={nameB}
+              iconA={iconA}
+              iconB={iconB}
+            />
+          </div>
+
+          <MVPSelector />
+        </>
+      )}
+
+      {activeTab === 'calculation' && (
+        <MoneyCalculation />
+      )}
+
+      {activeTab === 'payments' && (
+        <PaymentTracking />
+      )}
+
+      {activeTab === 'rosters' && (
+        <RosterManagement />
+      )}
+
 
       <footer style={{ textAlign: 'center', marginTop: '4rem', color: '#475569', fontSize: '0.8rem', paddingBottom: '2rem' }}>
         <p>Built for the game.</p>
