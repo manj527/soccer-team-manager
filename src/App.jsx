@@ -192,62 +192,62 @@ function App() {
         </p>
       </header>
 
-      <div className="nav-scroll-wrapper" style={{ marginBottom: '2rem' }}>
+      <div className="nav-wrap-container" style={{ marginBottom: '2rem' }}>
         <button
           onClick={() => setActiveTab('teams')}
           style={{
-            padding: '0.6rem 1rem',
+            padding: '0.6rem 0.8rem',
             borderRadius: '8px',
             backgroundColor: activeTab === 'teams' ? 'var(--accent-primary)' : 'var(--card-bg)',
             color: activeTab === 'teams' ? 'white' : 'var(--text-secondary)',
             border: `1px solid ${activeTab === 'teams' ? 'var(--accent-primary)' : '#334155'}`,
-            display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500',
-            whiteSpace: 'nowrap'
+            display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: '500',
+            fontSize: 'max(0.85rem, 3.5vw)'
           }}
         >
-          <Users size={18} /> Teams
+          <Users size={16} /> Teams
         </button>
         <button
           onClick={() => setActiveTab('calculation')}
           style={{
-            padding: '0.6rem 1rem',
+            padding: '0.6rem 0.8rem',
             borderRadius: '8px',
             backgroundColor: activeTab === 'calculation' ? 'var(--accent-primary)' : 'var(--card-bg)',
             color: activeTab === 'calculation' ? 'white' : 'var(--text-secondary)',
             border: `1px solid ${activeTab === 'calculation' ? 'var(--accent-primary)' : '#334155'}`,
-            display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500',
-            whiteSpace: 'nowrap'
+            display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: '500',
+            fontSize: 'max(0.85rem, 3.5vw)'
           }}
         >
-          <DollarSign size={18} /> Calculation
+          <DollarSign size={16} /> Calculation
         </button>
         <button
           onClick={() => setActiveTab('payments')}
           style={{
-            padding: '0.6rem 1rem',
+            padding: '0.6rem 0.8rem',
             borderRadius: '8px',
             backgroundColor: activeTab === 'payments' ? 'var(--accent-primary)' : 'var(--card-bg)',
             color: activeTab === 'payments' ? 'white' : 'var(--text-secondary)',
             border: `1px solid ${activeTab === 'payments' ? 'var(--accent-primary)' : '#334155'}`,
-            display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500',
-            whiteSpace: 'nowrap'
+            display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: '500',
+            fontSize: 'max(0.85rem, 3.5vw)'
           }}
         >
-          <Calendar size={18} /> Payments
+          <Calendar size={16} /> Payments
         </button>
         <button
           onClick={() => setActiveTab('rosters')}
           style={{
-            padding: '0.6rem 1rem',
+            padding: '0.6rem 0.8rem',
             borderRadius: '8px',
             backgroundColor: activeTab === 'rosters' ? 'var(--accent-primary)' : 'var(--card-bg)',
             color: activeTab === 'rosters' ? 'white' : 'var(--text-secondary)',
             border: `1px solid ${activeTab === 'rosters' ? 'var(--accent-primary)' : '#334155'}`,
-            display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500',
-            whiteSpace: 'nowrap'
+            display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: '500',
+            fontSize: 'max(0.85rem, 3.5vw)'
           }}
         >
-          <List size={18} /> Rosters
+          <List size={16} /> Rosters
         </button>
       </div>
 

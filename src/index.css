@@ -72,19 +72,12 @@ textarea:focus {
   }
 }
 
-.nav-scroll-wrapper {
+.nav-wrap-container {
   display: flex;
-  overflow-x: auto;
-  gap: 0.75rem;
-  padding-bottom: 4px;
-  scrollbar-width: none; /* Hide scrollbar Firefox */
-  -ms-overflow-style: none; /* Hide scrollbar IE/Edge */
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
   width: 100%;
-}
-
-.nav-scroll-wrapper::-webkit-scrollbar {
-  display: none; /* Hide scrollbar Chrome/Safari */
 }
 
 .btn-primary {
