@@ -155,7 +155,7 @@ export function RosterManagement() {
             )}
 
             {/* Tabs for Lists */}
-            <div className="nav-scroll-wrapper" style={{ marginBottom: '1.5rem', borderBottom: '1px solid #334155', paddingBottom: '0.5rem' }}>
+            <div className="nav-wrap-container" style={{ marginBottom: '1.5rem', borderBottom: '1px solid #334155', paddingBottom: '0.5rem' }}>
                 {['saturday', 'wednesday', 'guests'].map(list => (
                     <button
                         key={list}
