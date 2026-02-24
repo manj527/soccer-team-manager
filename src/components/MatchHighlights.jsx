@@ -242,10 +242,7 @@ export const MatchHighlights = React.memo(() => {
                         <div className="magazine-canvas" ref={magazineRef}>
                             <header className="magazine-header">
                                 <span className="magazine-date">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                                <h1 className="magazine-masthead">NJSC MATCH DAY HIGHLIGHTS</h1>
-                                <div style={{ borderTop: '1px solid #1a1a1a', borderBottom: '1px solid #1a1a1a', padding: '0.25rem', fontSize: '0.75rem', fontWeight: 'bold' }}>
-                                    LOCAL SOCCER SPECIAL EDITION • VOLUME 1 • ISSUE 1
-                                </div>
+                                <h1 className="magazine-masthead">NJSC Match Day Highlights</h1>
                             </header>
 
                             <div className="magazine-grid">
