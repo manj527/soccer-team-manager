@@ -53,7 +53,7 @@ function App() {
   const [rosters, setRosters] = useState({ saturday: [], wednesday: [], guests: [] });
   const [sessionForTeams, setSessionForTeams] = useState('saturday');
 
-  const fetchRosters = async () => {
+  const fetchRosters = React.useCallback(async () => {
     try {
       const res = await fetch('/api/rosters');
       const data = await res.json();
@@ -69,11 +69,11 @@ function App() {
       console.error(err);
       return rosters; // fallback to current state
     }
-  };
+  }, [rosters]);
 
   React.useEffect(() => {
     fetchRosters();
-  }, [activeTab]); // Refetch when changing tabs to ensure fresh data
+  }, [activeTab, fetchRosters]); // Refetch when changing tabs to ensure fresh data
 
   const handleGenerateTeams = async () => {
     const latestRosters = await fetchRosters();

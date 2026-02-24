@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Share2, Copy, Check, Camera, X } from 'lucide-react';
 import { Shield, Swords, Crown, Skull, Star, Zap } from 'lucide-react';
 

@@ -40,7 +40,8 @@
       "id": "def-5",
       "name": "Akhil",
       "types": [
-        "saturday"
+        "saturday",
+        "guests"
       ],
       "pairedWith": null
     },
@@ -220,7 +221,8 @@
       "id": "player-1771796196287-426ra20it",
       "name": "Atul",
       "types": [
-        "guest"
+        "guest",
+        "guests"
       ],
       "pairedWith": null
     },
@@ -229,6 +231,22 @@
       "name": "Joyal",
       "types": [
         "guest"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "player-1771896369814-e8wavxqx1",
+      "name": "Alex",
+      "types": [
+        "guests"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "player-1771896404076-yyrtm2peo",
+      "name": "Darryl",
+      "types": [
+        "wednesday"
       ],
       "pairedWith": null
     }
