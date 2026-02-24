@@ -103,9 +103,11 @@
     transition: all 0.2s;
 }
 
-.team-name-input:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.2);
+@media (hover: hover) {
+    .team-name-input:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
 }
 
 .team-name-input:focus {
@@ -151,9 +153,11 @@
     border-radius: 2px;
 }
 
-.reorder-btn:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+@media (hover: hover) {
+    .reorder-btn:hover:not(:disabled) {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
 }
 
 .drag-handle {
@@ -223,9 +227,11 @@
     transition: all 0.2s;
 }
 
-.action-icon-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
+@media (hover: hover) {
+    .action-icon-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+    }
 }
 
 .delete-icon-btn {
@@ -240,8 +246,10 @@
     cursor: pointer;
 }
 
-.delete-icon-btn:hover {
-    color: #ef4444;
+@media (hover: hover) {
+    .delete-icon-btn:hover {
+        color: #ef4444;
+    }
 }
 
 .unassigned-pool {
@@ -285,8 +293,10 @@
     gap: 0.5rem;
 }
 
-.shuffle-btn:hover {
-    background: #d97706;
+@media (hover: hover) {
+    .shuffle-btn:hover {
+        background: #d97706;
+    }
 }
 
 .icon-selector {
@@ -307,8 +317,10 @@
     cursor: pointer;
 }
 
-.icon-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
+@media (hover: hover) {
+    .icon-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
 }
 
 .icon-btn.selected {

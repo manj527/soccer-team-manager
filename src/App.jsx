@@ -67,9 +67,9 @@ function App() {
       return newRosters;
     } catch (err) {
       console.error(err);
-      return rosters; // fallback to current state
+      return null;
     }
-  }, [rosters]);
+  }, []);
 
   React.useEffect(() => {
     fetchRosters();

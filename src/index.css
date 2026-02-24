@@ -93,9 +93,11 @@ textarea:focus {
   gap: 0.5rem;
 }
 
-.btn-primary:hover {
-  background-color: var(--accent-hover);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .btn-primary:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
+  }
 }
 
 button:active {

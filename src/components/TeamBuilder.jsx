@@ -3,7 +3,7 @@ import {
     DndContext,
     closestCenter,
     KeyboardSensor,
-    PointerSensor,
+    MouseSensor,
     TouchSensor,
     useSensor,
     useSensors,
@@ -28,6 +28,52 @@ const ICONS = {
     zap: Zap,
 };
 
+const IconSelector = React.memo(({ selected, onSelect }) => (
+    <div className="icon-selector">
+        {Object.entries(ICONS).map(([key, _IconComponent]) => (
+            <button
+                key={key}
+                onClick={() => onSelect(key)}
+                className={`icon-btn ${selected === key ? 'selected' : ''}`}
+            >
+                <_IconComponent size={16} />
+            </button>
+        ))}
+    </div>
+));
+
+const TeamHeader = React.memo(({ name, setName, color, setColor, icon, setIcon, count, align }) => {
+    return (
+        <div className="team-header-block">
+            <div className="team-header-top">
+                <input
+                    type="color"
+                    value={color}
+                    onChange={(e) => setColor(e.target.value)}
+                    className="color-picker"
+                />
+                <div className="team-name-wrapper">
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="team-name-input"
+                        style={{ textAlign: align }}
+                        placeholder="Enter Team Name"
+                    />
+                    <span className="edit-hint">✎</span>
+                </div>
+            </div>
+            <div className="team-header-bottom">
+                <IconSelector selected={icon} onSelect={setIcon} />
+                <span className="team-count-badge" style={{ backgroundColor: color }}>
+                    {count}
+                </span>
+            </div>
+        </div>
+    );
+});
+
 // Sortable Item Component
 const SortablePlayerItem = React.memo(({ player, team, colorA, colorB, nameA, nameB, moveToTeam, handleDelete }) => {
     const {
@@ -45,7 +91,6 @@ const SortablePlayerItem = React.memo(({ player, team, colorA, colorB, nameA, na
         opacity: isDragging ? 0.5 : 1,
         zIndex: isDragging ? 1000 : 1,
         position: 'relative',
-        touchAction: 'none' // Essential for dnd-kit on mobile
     };
 
     return (
@@ -101,7 +146,7 @@ const UnassignedPlayerItem = React.memo(({ player, colorA, colorB, moveToTeam, h
     </div>
 ));
 
-export function TeamBuilder({
+export const TeamBuilder = React.memo(({
     players,
     teamA,
     teamB,
@@ -120,16 +165,16 @@ export function TeamBuilder({
     setIconA,
     iconB,
     setIconB,
-}) {
+}) => {
     const sensors = useSensors(
-        useSensor(PointerSensor, {
+        useSensor(MouseSensor, {
             activationConstraint: {
-                distance: 8,
+                distance: 10,
             },
         }),
         useSensor(TouchSensor, {
             activationConstraint: {
-                delay: 200,
+                delay: 250,
                 tolerance: 5,
             },
         }),
@@ -194,52 +239,6 @@ export function TeamBuilder({
         setPlayers([]);
     };
 
-    const IconSelector = ({ selected, onSelect }) => (
-        <div className="icon-selector">
-            {Object.entries(ICONS).map(([key, _IconComponent]) => (
-                <button
-                    key={key}
-                    onClick={() => onSelect(key)}
-                    className={`icon-btn ${selected === key ? 'selected' : ''}`}
-                >
-                    <_IconComponent size={16} />
-                </button>
-            ))}
-        </div>
-    );
-
-    const TeamHeader = ({ name, setName, color, setColor, icon, setIcon, count, align }) => {
-        const SelectedIcon = ICONS[icon] || Shield;
-        return (
-            <div className="team-header-block">
-                <div className="team-header-top">
-                    <input
-                        type="color"
-                        value={color}
-                        onChange={(e) => setColor(e.target.value)}
-                        className="color-picker"
-                    />
-                    <div className="team-name-wrapper">
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            className="team-name-input"
-                            style={{ textAlign: align }}
-                            placeholder="Enter Team Name"
-                        />
-                        <span className="edit-hint">✎</span>
-                    </div>
-                </div>
-                <div className="team-header-bottom">
-                    <IconSelector selected={icon} onSelect={setIcon} />
-                    <span className="team-count-badge" style={{ backgroundColor: color }}>
-                        {count}
-                    </span>
-                </div>
-            </div>
-        );
-    };
 
     return (
         <DndContext
@@ -350,4 +349,4 @@ export function TeamBuilder({
             </div>
         </DndContext>
     );
-}
+});

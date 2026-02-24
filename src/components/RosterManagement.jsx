@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Users, Save, Plus, X, List } from 'lucide-react';
 
-export function RosterManagement() {
+export const RosterManagement = React.memo(() => {
     const [rosterData, setRosterData] = useState({
         players: [],
         communityFund: 0
@@ -253,4 +253,4 @@ export function RosterManagement() {
             {saving && <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '1rem', textAlign: 'right' }}>Saving...</p>}
         </div>
     );
-}
+});
