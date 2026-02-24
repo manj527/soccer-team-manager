@@ -1,0 +1,237 @@
+{
+  "players": [
+    {
+      "id": "def-1",
+      "name": "Manoj",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-2",
+      "name": "Josh",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-3",
+      "name": "Sajee",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-4",
+      "name": "Shine",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-5",
+      "name": "Akhil",
+      "types": [
+        "saturday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-6",
+      "name": "Lalu",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-7",
+      "name": "Abhishek",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-8",
+      "name": "Mahesh",
+      "types": [
+        "saturday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-9",
+      "name": "Abhinav",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-10",
+      "name": "Azeem",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-11",
+      "name": "Shammer",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-12",
+      "name": "Sudheer",
+      "types": [
+        "saturday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-13",
+      "name": "Gipsy",
+      "types": [
+        "saturday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-14",
+      "name": "Das",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-15",
+      "name": "Appu",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-16",
+      "name": "Shishir",
+      "types": [
+        "saturday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-17",
+      "name": "Shijo",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-18",
+      "name": "Val",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-19",
+      "name": "Nisam",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "def-20",
+      "name": "Santhosh",
+      "types": [
+        "saturday",
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "player-1771796163182-t92vvw7r9",
+      "name": "Perry",
+      "types": [
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "player-1771796166899-imaic3yog",
+      "name": "James",
+      "types": [
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "player-1771796170656-uw1lsymvk",
+      "name": "Lakshya",
+      "types": [
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "player-1771796238360-nev39h0wa",
+      "name": "Jayant",
+      "types": [
+        "wednesday"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "player-1771796247194-xtoz5al21",
+      "name": "Ben",
+      "types": [
+        "wednesday",
+        "guest"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "player-1771796196287-426ra20it",
+      "name": "Atul",
+      "types": [
+        "guest"
+      ],
+      "pairedWith": null
+    },
+    {
+      "id": "player-1771796201102-r2452ojum",
+      "name": "Joyal",
+      "types": [
+        "guest"
+      ],
+      "pairedWith": null
+    }
+  ],
+  "communityFund": 0
+}
