@@ -14,7 +14,15 @@ const HIGHLIGHT_TYPES = [
 
 export const MatchHighlights = React.memo(() => {
     const [highlights, setHighlights] = useState([
-        { id: Date.now(), type: 'goal', title: 'Top Corner Screamer!', details: 'What a finish from outside the box!', photo: null }
+        {
+            id: Date.now(),
+            type: 'goal',
+            title: 'Top Corner Screamer!',
+            details: 'What a finish from outside the box!',
+            photo: null,
+            shape: 'normal',
+            badge: null
+        }
     ]);
     const [dunkinStories, setDunkinStories] = useState('');
     const [showPreview, setShowPreview] = useState(false);
@@ -24,7 +32,7 @@ export const MatchHighlights = React.memo(() => {
     const addHighlight = () => {
         setHighlights([
             ...highlights,
-            { id: Date.now(), type: 'goal', title: '', details: '', photo: null }
+            { id: Date.now(), type: 'goal', title: '', details: '', photo: null, shape: 'normal', badge: null }
         ]);
     };
 
@@ -119,23 +127,57 @@ export const MatchHighlights = React.memo(() => {
                         />
 
                         <div className="photo-upload-container">
-                            <label className="btn-secondary" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', width: 'fit-content' }}>
-                                <Camera size={18} /> {h.photo ? 'Change Photo' : 'Add Photo'}
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={(e) => handlePhotoUpload(h.id, e)}
-                                    style={{ display: 'none' }}
-                                />
-                            </label>
+                            <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                <label className="btn-secondary" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <Camera size={18} /> {h.photo ? 'Change Photo' : 'Add Photo'}
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={(e) => handlePhotoUpload(h.id, e)}
+                                        style={{ display: 'none' }}
+                                    />
+                                </label>
+                                {h.photo && (
+                                    <select
+                                        value={h.shape}
+                                        onChange={(e) => updateHighlight(h.id, 'shape', e.target.value)}
+                                        className="btn-secondary"
+                                        style={{ width: 'auto' }}
+                                    >
+                                        <option value="normal">Normal Rect</option>
+                                        <option value="circle">Circle Card</option>
+                                        <option value="shield">Shield Card</option>
+                                    </select>
+                                )}
+                            </div>
 
                             {h.photo && (
-                                <div className="photo-preview-wrapper">
-                                    <img src={h.photo} alt="Preview" className="photo-preview" />
-                                    <button className="remove-photo-btn" onClick={() => updateHighlight(h.id, 'photo', null)}>
-                                        <X size={14} />
-                                    </button>
-                                </div>
+                                <>
+                                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+                                        {[
+                                            { id: null, label: 'No Badge' },
+                                            { id: 'KEY MOMENT', label: 'Key Moment', class: '' },
+                                            { id: 'STAR PLAYER', label: 'Star Player', class: 'badge-gold' },
+                                            { id: 'GOAL OF THE DAY', label: 'Goal', class: 'badge-blue' },
+                                            { id: 'MIRACLE SAVE', label: 'Miracle Save', class: 'badge-purple' },
+                                        ].map(b => (
+                                            <button
+                                                key={b.id}
+                                                onClick={() => updateHighlight(h.id, 'badge', b.id)}
+                                                className={`btn-secondary ${h.badge === b.id ? 'selected' : ''}`}
+                                                style={{ fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
+                                            >
+                                                {b.label}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <div className="photo-preview-wrapper" style={{ marginTop: '0.5rem' }}>
+                                        <img src={h.photo} alt="Preview" className="photo-preview" />
+                                        <button className="remove-photo-btn" onClick={() => updateHighlight(h.id, 'photo', null)}>
+                                            <X size={14} />
+                                        </button>
+                                    </div>
+                                </>
                             )}
                         </div>
                     </div>
@@ -183,8 +225,16 @@ export const MatchHighlights = React.memo(() => {
                                         </h3>
                                         <h2>{h.title || 'Breaking News!'}</h2>
                                         {h.photo && (
-                                            <div className="highlight-image-box">
+                                            <div className={`highlight-image-box shape-${h.shape}`}>
                                                 <img src={h.photo} alt="Story" />
+                                                {h.badge && (
+                                                    <div className={`highlight-badge ${h.badge === 'STAR PLAYER' ? 'badge-gold' :
+                                                            h.badge === 'GOAL OF THE DAY' ? 'badge-blue' :
+                                                                h.badge === 'MIRACLE SAVE' ? 'badge-purple' : ''
+                                                        }`}>
+                                                        {h.badge}
+                                                    </div>
+                                                )}
                                             </div>
                                         )}
                                         <p className="article-content">{h.details || 'More details to follow as the story develops...'}</p>
@@ -202,6 +252,7 @@ export const MatchHighlights = React.memo(() => {
                                             {dunkinStories.split('\n').map((line, i) => (
                                                 <p key={i}>{line}</p>
                                             ))}
+                                            <span className="dunkin-note">☕ Fresh from Dunkin' Donuts</span>
                                         </div>
                                     </div>
                                 )}
