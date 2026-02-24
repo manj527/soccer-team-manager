@@ -184,13 +184,13 @@ export function TeamBuilder({
 
     const IconSelector = ({ selected, onSelect }) => (
         <div className="icon-selector">
-            {Object.entries(ICONS).map(([key, Icon]) => (
+            {Object.entries(ICONS).map(([key, _IconComponent]) => (
                 <button
                     key={key}
                     onClick={() => onSelect(key)}
                     className={`icon-btn ${selected === key ? 'selected' : ''}`}
                 >
-                    <Icon size={16} />
+                    <_IconComponent size={16} />
                 </button>
             ))}
         </div>

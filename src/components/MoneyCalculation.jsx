@@ -678,7 +678,7 @@ export function MoneyCalculation() {
                                 </button>
                             </div>
 
-                            {expenses.map((exp, index) => (
+                            {expenses.map((exp) => (
                                 <div key={exp.id} style={{ padding: '1.25rem', backgroundColor: '#1e293b', border: '1px solid #334155', borderRadius: '8px', marginBottom: '1rem' }}>
                                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start', marginBottom: '1rem' }}>
                                         <div style={{ flexGrow: 2 }}>

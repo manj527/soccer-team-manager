@@ -10,7 +10,7 @@ export function PaymentTracking() {
     const [error, setError] = useState(null);
     const [saving, setSaving] = useState(false);
     const [copied, setCopied] = useState(false);
-    const [expandedPlayerId, setExpandedPlayerId] = useState(null);
+
 
     useEffect(() => { fetchSeasons(); }, []);
 
