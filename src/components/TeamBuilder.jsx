@@ -29,7 +29,7 @@ const ICONS = {
 };
 
 // Sortable Item Component
-function SortablePlayerItem({ player, team, colorA, colorB, nameA, nameB, moveToTeam, handleDelete }) {
+const SortablePlayerItem = React.memo(({ player, team, colorA, colorB, nameA, nameB, moveToTeam, handleDelete }) => {
     const {
         attributes,
         listeners,
@@ -45,6 +45,7 @@ function SortablePlayerItem({ player, team, colorA, colorB, nameA, nameB, moveTo
         opacity: isDragging ? 0.5 : 1,
         zIndex: isDragging ? 1000 : 1,
         position: 'relative',
+        touchAction: 'none' // Essential for dnd-kit on mobile
     };
 
     return (
@@ -80,23 +81,25 @@ function SortablePlayerItem({ player, team, colorA, colorB, nameA, nameB, moveTo
             </div>
         </div>
     );
-}
+});
 
-// Regular Item for Unassigned (no drag needed usually, or can add later)
-function UnassignedPlayerItem({ player, colorA, colorB, moveToTeam, handleDelete }) {
-    return (
-        <div className="player-card-row unassigned-row" style={{ borderLeft: `4px solid #64748b` }}>
-            <span className="player-name-text">{player.name}</span>
-            <div className="player-actions">
-                <button className="action-icon-btn" onClick={() => moveToTeam(player, 'unassigned', 'A')} style={{ color: colorA }}>A</button>
-                <button className="action-icon-btn" onClick={() => moveToTeam(player, 'unassigned', 'B')} style={{ color: colorB }}>B</button>
-                <button className="delete-icon-btn" onClick={() => handleDelete(player, 'unassigned')}>
-                    <X size={16} />
-                </button>
-            </div>
+// Regular Item for Unassigned
+const UnassignedPlayerItem = React.memo(({ player, colorA, colorB, moveToTeam, handleDelete }) => (
+    <div className="player-card-row" style={{ borderLeft: '4px solid #475569' }}>
+        <span className="player-name-text" style={{ marginLeft: '0.5rem' }}>{player.name}</span>
+        <div className="player-actions">
+            <button className="action-icon-btn" onClick={() => moveToTeam(player, 'unassigned', 'A')} style={{ color: colorA }}>
+                <ArrowUp size={18} /> A
+            </button>
+            <button className="action-icon-btn" onClick={() => moveToTeam(player, 'unassigned', 'B')} style={{ color: colorB }}>
+                <ArrowUp size={18} /> B
+            </button>
+            <button className="delete-icon-btn" onClick={() => handleDelete(player, 'unassigned')}>
+                <X size={16} />
+            </button>
         </div>
-    );
-}
+    </div>
+));
 
 export function TeamBuilder({
     players,
@@ -119,8 +122,17 @@ export function TeamBuilder({
     setIconB,
 }) {
     const sensors = useSensors(
-        useSensor(PointerSensor),
-        useSensor(TouchSensor),
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 8,
+            },
+        }),
+        useSensor(TouchSensor, {
+            activationConstraint: {
+                delay: 200,
+                tolerance: 5,
+            },
+        }),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
         })
