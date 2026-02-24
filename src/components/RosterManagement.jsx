@@ -155,21 +155,22 @@ export function RosterManagement() {
             )}
 
             {/* Tabs for Lists */}
-            <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem', borderBottom: '1px solid #334155', paddingBottom: '0.5rem' }}>
+            <div className="nav-scroll-wrapper" style={{ marginBottom: '1.5rem', borderBottom: '1px solid #334155', paddingBottom: '0.5rem' }}>
                 {['saturday', 'wednesday', 'guests'].map(list => (
                     <button
                         key={list}
                         onClick={() => setActiveList(list)}
                         style={{
-                            padding: '0.5rem 1rem',
+                            padding: '0.5rem 0.75rem',
                             borderRadius: '8px',
                             backgroundColor: activeList === list ? 'var(--accent-primary)' : 'transparent',
                             color: activeList === list ? 'white' : 'var(--text-secondary)',
                             fontWeight: activeList === list ? '600' : 'normal',
-                            textTransform: 'capitalize'
+                            textTransform: 'capitalize',
+                            whiteSpace: 'nowrap'
                         }}
                     >
-                        {list === 'saturday' ? 'Saturday Indoor' : list === 'wednesday' ? 'Wednesday Indoor' : 'Guests'}
+                        {list === 'saturday' ? 'Saturday' : list === 'wednesday' ? 'Wednesday' : 'Guests'}
                     </button>
                 ))}
             </div>
