@@ -4,7 +4,7 @@ import html2canvas from 'html2canvas';
 import { GIFEncoder, quantize, applyPalette } from 'gifenc';
 import './MVPSelector.css';
 
-export function MVPSelector() {
+export const MVPSelector = React.memo(() => {
     const [isOpen, setIsOpen] = useState(false);
     const [showCelebration, setShowCelebration] = useState(false);
 
@@ -333,4 +333,4 @@ export function MVPSelector() {
             )}
         </>
     );
-}
+});

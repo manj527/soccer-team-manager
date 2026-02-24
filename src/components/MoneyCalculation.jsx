@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Save, Users, DollarSign, Send, Plus, Trash2, CalendarDays, List, RefreshCcw } from 'lucide-react';
 
-export function MoneyCalculation() {
+export const MoneyCalculation = React.memo(() => {
     const [sessionType, setSessionType] = useState('saturday'); // saturday, wednesday, holiday
     const [seasonName, setSeasonName] = useState('');
     const [numberOfSessions, setNumberOfSessions] = useState(1);
@@ -848,4 +848,4 @@ export function MoneyCalculation() {
             )}
         </div>
     );
-}
+});

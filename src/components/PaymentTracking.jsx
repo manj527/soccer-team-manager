@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DollarSign, Check, Copy, AlertCircle, RefreshCcw, ChevronDown, ChevronUp, Clock, Users, User } from 'lucide-react';
 
-export function PaymentTracking() {
+export const PaymentTracking = React.memo(() => {
     const [seasons, setSeasons] = useState([]);
     const [showHistorical, setShowHistorical] = useState(false);
     const [selectedSeasonId, setSelectedSeasonId] = useState('');
@@ -361,4 +361,4 @@ export function PaymentTracking() {
             {saving && <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', textAlign: 'right' }}>Saving...</p>}
         </div>
     );
-}
+});
