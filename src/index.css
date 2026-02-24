@@ -98,6 +98,15 @@ textarea:focus {
   transform: translateY(-1px);
 }
 
+button:active {
+  transform: scale(0.96);
+  opacity: 0.9;
+}
+
+select:active {
+  background-color: #334155;
+}
+
 .btn-secondary {
   background-color: var(--card-bg);
   color: var(--text-primary);
