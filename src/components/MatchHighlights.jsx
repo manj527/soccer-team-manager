@@ -9,12 +9,14 @@ const HIGHLIGHT_TYPES = [
     { id: 'mvp', label: 'Special Mention', icon: Trophy, color: '#fbbf24' },
     { id: 'welcome', label: 'Welcome', icon: Star, color: '#a78bfa' },
     { id: 'thanks', label: 'Special Thanks', icon: Heart, color: '#ec4899' },
+    { id: 'dunkin', label: 'Dunkin Story', icon: Heart, color: '#ff6719' }, // Dunkin Orange
 ];
 
 export const MatchHighlights = React.memo(() => {
     const [highlights, setHighlights] = useState([
         { id: Date.now(), type: 'goal', title: 'Top Corner Screamer!', details: 'What a finish from outside the box!', photo: null }
     ]);
+    const [dunkinStories, setDunkinStories] = useState('');
     const [showPreview, setShowPreview] = useState(false);
     const [isExporting, setIsExporting] = useState(false);
     const magazineRef = useRef(null);
@@ -143,6 +145,19 @@ export const MatchHighlights = React.memo(() => {
                     <Plus size={18} /> Add Highlight
                 </button>
 
+                <div className="dunkin-editor-section" style={{ marginTop: '1.5rem', padding: '1rem', border: '2px solid #ff6719', borderRadius: '8px', background: 'rgba(255, 103, 25, 0.05)' }}>
+                    <h3 style={{ color: '#ff6719', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        ☕🍩 Dunkin' Stories
+                    </h3>
+                    <textarea
+                        value={dunkinStories}
+                        onChange={(e) => setDunkinStories(e.target.value)}
+                        placeholder="Share chats, jokes, or events from Dunkin'..."
+                        rows={3}
+                        style={{ marginTop: '0.5rem' }}
+                    />
+                </div>
+
                 <button className="btn-primary" onClick={() => setShowPreview(true)} style={{ marginTop: '1rem', backgroundColor: '#1a1a1a' }}>
                     <Newspaper size={20} /> Preview Magazine
                 </button>
@@ -154,7 +169,7 @@ export const MatchHighlights = React.memo(() => {
                         <div className="magazine-canvas" ref={magazineRef}>
                             <header className="magazine-header">
                                 <span className="magazine-date">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                                <h1 className="magazine-masthead">MATCH DAY TIMES</h1>
+                                <h1 className="magazine-masthead">NJSC MATCH DAY HIGHLIGHTS</h1>
                                 <div style={{ borderTop: '1px solid #1a1a1a', borderBottom: '1px solid #1a1a1a', padding: '0.25rem', fontSize: '0.75rem', fontWeight: 'bold' }}>
                                     LOCAL SOCCER SPECIAL EDITION • VOLUME 1 • ISSUE 1
                                 </div>
@@ -175,6 +190,21 @@ export const MatchHighlights = React.memo(() => {
                                         <p className="article-content">{h.details || 'More details to follow as the story develops...'}</p>
                                     </div>
                                 ))}
+
+                                {dunkinStories && (
+                                    <div className="dunkin-magazine-section">
+                                        <div className="dunkin-banner">
+                                            <span>☕</span>
+                                            <h4>DUNKIN' STORIES</h4>
+                                            <span>🍩</span>
+                                        </div>
+                                        <div className="dunkin-content">
+                                            {dunkinStories.split('\n').map((line, i) => (
+                                                <p key={i}>{line}</p>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
 
                             <footer style={{ marginTop: '2rem', borderTop: '2px solid #1a1a1a', paddingTop: '1rem', textAlign: 'center', fontSize: '0.8rem', color: '#666' }}>
