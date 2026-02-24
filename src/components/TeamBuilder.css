@@ -192,6 +192,8 @@
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem;
+    touch-action: pan-y;
+    /* Allow vertical scrolling */
 }
 
 .player-name-text {
