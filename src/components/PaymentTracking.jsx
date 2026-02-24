@@ -274,9 +274,27 @@ export function PaymentTracking() {
                                             style={{ width: '80px', textAlign: 'right', padding: '0.2rem 0.4rem', fontSize: '0.85rem', backgroundColor: 'var(--card-bg)', color: 'var(--text-primary)', border: '1px solid #334155', borderRadius: '4px' }}
                                             disabled={saving}
                                         />
-                                        <span style={{ fontWeight: 'bold', color: s.balance < -0.01 ? '#f87171' : s.balance > 0.01 ? '#22c55e' : 'var(--text-secondary)' }}>
-                                            {s.balance < -0.01 ? `-$${Math.abs(s.balance).toFixed(2)}` : s.balance > 0.01 ? `+$${s.balance.toFixed(2)}` : '$0.00'}
-                                        </span>
+                                        {s.balance < -0.01 ? (
+                                            <button
+                                                onClick={() => handleUpdatePayment(s.seasonId, selectedPlayerId, s.owed)}
+                                                className="btn-primary"
+                                                style={{ padding: '0.2rem 0.6rem', fontSize: '0.75rem' }}
+                                                disabled={saving}
+                                            >
+                                                <Check size={12} /> Paid
+                                            </button>
+                                        ) : s.balance > 0.01 ? (
+                                            <span style={{ fontWeight: 'bold', color: '#22c55e' }}>
+                                                +${s.balance.toFixed(2)}
+                                            </span>
+                                        ) : (
+                                            <span style={{ color: '#22c55e' }}>✓</span>
+                                        )}
+                                        {s.balance < -0.01 && (
+                                            <span style={{ fontWeight: 'bold', color: '#f87171' }}>
+                                                -${Math.abs(s.balance).toFixed(2)}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             ))}
