@@ -6,7 +6,8 @@ import { MVPSelector } from './components/MVPSelector';
 import { MoneyCalculation } from './components/MoneyCalculation';
 import { PaymentTracking } from './components/PaymentTracking';
 import { RosterManagement } from './components/RosterManagement';
-import { Trophy, Users, DollarSign, Calendar, List, Download, Upload, UserPlus } from 'lucide-react';
+import { Trophy, Users, DollarSign, Calendar, List, Download, Upload, UserPlus, Newspaper } from 'lucide-react';
+import { MatchHighlights } from './components/MatchHighlights';
 
 const DEFAULT_PLAYERS = [
 
@@ -249,6 +250,20 @@ function App() {
         >
           <List size={16} /> Rosters
         </button>
+        <button
+          onClick={() => setActiveTab('highlights')}
+          style={{
+            padding: '0.6rem 0.8rem',
+            borderRadius: '8px',
+            backgroundColor: activeTab === 'highlights' ? 'var(--accent-primary)' : 'var(--card-bg)',
+            color: activeTab === 'highlights' ? 'white' : 'var(--text-secondary)',
+            border: `1px solid ${activeTab === 'highlights' ? 'var(--accent-primary)' : '#334155'}`,
+            display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: '500',
+            fontSize: 'max(0.85rem, 3.5vw)'
+          }}
+        >
+          <Newspaper size={16} /> Highlights
+        </button>
       </div>
 
       {activeTab === 'teams' && (
@@ -334,6 +349,9 @@ function App() {
         <RosterManagement />
       )}
 
+      {activeTab === 'highlights' && (
+        <MatchHighlights />
+      )}
 
       <footer style={{ textAlign: 'center', marginTop: '4rem', color: '#475569', fontSize: '0.8rem', paddingBottom: '2rem' }}>
         <p>Built for the game.</p>
