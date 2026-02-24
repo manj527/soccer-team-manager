@@ -286,6 +286,24 @@
     display: block;
 }
 
+.dunkin-photo-frame {
+    float: right;
+    width: 40%;
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background: white;
+    border: 1px solid #ff6719;
+    box-shadow: 4px 4px 0px rgba(255, 103, 25, 0.2);
+    transform: rotate(2deg);
+}
+
+.dunkin-photo-frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 .magazine-actions {
     position: fixed;
     bottom: 2rem;
