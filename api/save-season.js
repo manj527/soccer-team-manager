@@ -1,4 +1,6 @@
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
+
+const redis = Redis.fromEnv();
 
 export default async function handler(req, res) {
     const SEASONS_PREFIX = 'soccer_season:';
@@ -15,18 +17,18 @@ export default async function handler(req, res) {
             data.lastUpdated = new Date().toISOString();
 
             // Save season data
-            await kv.set(`${SEASONS_PREFIX}${data.id}`, data);
+            await redis.set(`${SEASONS_PREFIX}${data.id}`, data);
 
             // Update list if new
-            let seasonIds = await kv.get(SEASONS_LIST_KEY) || [];
+            let seasonIds = await redis.get(SEASONS_LIST_KEY) || [];
             if (!seasonIds.includes(data.id)) {
                 seasonIds.push(data.id);
-                await kv.set(SEASONS_LIST_KEY, seasonIds);
+                await redis.set(SEASONS_LIST_KEY, seasonIds);
             }
 
             return res.status(200).json({ success: true, id: data.id, message: 'Saved successfully' });
         } catch (error) {
-            console.error('KV Error:', error);
+            console.error('Redis Error:', error);
             return res.status(500).json({ error: error.message });
         }
     }

@@ -1,6 +1,8 @@
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
 import fs from 'fs';
 import path from 'path';
+
+const redis = Redis.fromEnv();
 
 export default async function handler(req, res) {
     const SEASONS_PREFIX = 'soccer_season:';
@@ -8,7 +10,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'GET') {
         try {
-            let seasonIds = await kv.get(SEASONS_LIST_KEY);
+            let seasonIds = await redis.get(SEASONS_LIST_KEY);
 
             // Seed if empty
             if (!seasonIds) {
@@ -22,11 +24,10 @@ export default async function handler(req, res) {
                     });
 
                     seasonIds = seasons.map(s => s.id);
-                    await kv.set(SEASONS_LIST_KEY, seasonIds);
+                    await redis.set(SEASONS_LIST_KEY, seasonIds);
 
-                    // Use a pipeline or multiple sets
                     for (const season of seasons) {
-                        await kv.set(`${SEASONS_PREFIX}${season.id}`, season);
+                        await redis.set(`${SEASONS_PREFIX}${season.id}`, season);
                     }
                 } else {
                     seasonIds = [];
@@ -40,7 +41,7 @@ export default async function handler(req, res) {
             // Fetch all seasons
             const seasons = [];
             for (const id of seasonIds) {
-                const season = await kv.get(`${SEASONS_PREFIX}${id}`);
+                const season = await redis.get(`${SEASONS_PREFIX}${id}`);
                 if (season) seasons.push(season);
             }
 
@@ -49,7 +50,7 @@ export default async function handler(req, res) {
 
             return res.status(200).json(seasons);
         } catch (error) {
-            console.error('KV Error:', error);
+            console.error('Redis Error:', error);
             return res.status(500).json({ error: error.message });
         }
     }

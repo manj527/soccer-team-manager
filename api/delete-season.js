@@ -1,4 +1,6 @@
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
+
+const redis = Redis.fromEnv();
 
 export default async function handler(req, res) {
     const SEASONS_PREFIX = 'soccer_season:';
@@ -12,19 +14,19 @@ export default async function handler(req, res) {
             }
 
             let deleted = 0;
-            let seasonIds = await kv.get(SEASONS_LIST_KEY) || [];
+            let seasonIds = await redis.get(SEASONS_LIST_KEY) || [];
 
             for (const id of ids) {
-                await kv.del(`${SEASONS_PREFIX}${id}`);
+                await redis.del(`${SEASONS_PREFIX}${id}`);
                 seasonIds = seasonIds.filter(sid => sid !== id);
                 deleted++;
             }
 
-            await kv.set(SEASONS_LIST_KEY, seasonIds);
+            await redis.set(SEASONS_LIST_KEY, seasonIds);
 
             return res.status(200).json({ success: true, deleted });
         } catch (error) {
-            console.error('KV Error:', error);
+            console.error('Redis Error:', error);
             return res.status(500).json({ error: error.message });
         }
     }
